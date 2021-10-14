@@ -2,17 +2,15 @@ import React from "react";
 import CollectionsOverview from "../../components/collections-overview/collections-overview-component";
 import { Route } from "react-router-dom";
 import CollectionPage from "../collection/collection-component";
-import { updateCollections } from "../../redux/shop/shop-actions";
 import { connect } from "react-redux";
 import WithSpinner from "../../components/with-spinner/with-spinner-component";
 import {fetchCollectionsStartAsync} from '../../redux/shop/shop-actions';
 import {createStructuredSelector} from 'reselect';
-import {selectIsColletingFetching} from '../../redux/shop/shop-selector';
+import CollectionsOverviewContainer from "../../components/collections-overview/collections-overview-container";
+import CollectionPageContainer from "../collection/collection-container";
 
 
 
-const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
-const CollectionPageWithSpinner = WithSpinner(CollectionPage);
 
 class ShopPage extends React.Component {
     
@@ -24,32 +22,24 @@ class ShopPage extends React.Component {
 
 
       render() {
-        const { match,isCollectionFetching } = this.props;
+        const { match,isCollectionsLoaded } = this.props;
        
         return (
           <div>
             <Route
               exact
               path={`${match.path}`}
-              render={props => (
-                <CollectionsOverviewWithSpinner isLoading={isCollectionFetching} {...props} />
-              )}
+              component={CollectionsOverviewContainer}
             />
             <Route
               path={`${match.path}/:collectionId`}
-              render={props => (
-                <CollectionPageWithSpinner isLoading={isCollectionFetching} {...props} />
-              )}
+              component={CollectionPageContainer}
             />
           </div>
         );
       }
 } 
 
-
-const mapStateToProps = createStructuredSelector({
-  isCollectionFetching: selectIsColletingFetching
-});
 
 const mapDispatchToProps = dispatch => ({
   fetchCollectionsStartAsync: () => dispatch(fetchCollectionsStartAsync())
