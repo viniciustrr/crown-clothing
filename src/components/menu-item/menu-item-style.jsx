@@ -1,4 +1,4 @@
-import styled, {css} from "styled-components";
+import styled  from "styled-components";
 
 export const MenuItemContainer = styled.div`
 	height: ${({ size }) => (size ? '380px' : '240px')};

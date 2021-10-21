@@ -1,4 +1,4 @@
-import React from "react";
+
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { selectIsColletingFetching } from "../../redux/shop/shop-selector";
